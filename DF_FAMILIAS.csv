@@ -92,6 +92,7 @@ Cód.,Aluno,Nascimento,Mae
 105,MATHEUS SILVA MAGALHAES                                               ,2004-02-03,ANA LUCIA FRANCISCA DA SILVA                                          
 106,ANA BEATRIZ DA SILVA                                                  ,2003-09-30,MARIA LUZIA DOS SANTOS SILVA                                          
 107,RYAN FARIAS RIBEIRO                                                   ,2004-02-01,ANA KAROLINA GOMES FARIAS                                             
+108,THULIS OLIVEIRA TEIXEIRA DA SILVA                                     ,2003-12-27,ALINE BERNARDO OLIVEIRA                                               
 110,KAILANE DE SA DOS SANTOS                                              ,2004-12-30,DEBORA MARTINS DE SA                                                  
 111,MANOELA CONCEICAO ALVES                                               ,2002-09-24,MARLENE PEDRO DA CONCEICAO                                            
 112,JULIANO PEREIRA PIO                                                   ,2003-04-07,NEZILDA PEREIRA PIO                                                   
@@ -9524,7 +9525,6 @@ Cód.,Aluno,Nascimento,Mae
 24937,DAYANA DE CAMARGO CONCEICAO,2008-01-01,FLORA MARIA OLIVEIRA DE CAMARGO
 24938,ELOISA DA SILVA GOMES,2012-01-09,MARIA JOSE DA SILVA
 24939,FABIO MORETTI LOUREIRO JUNIOR,2010-11-26,JOSIANE GONÇALVES BRAGA
-24940,JUAN VICTOR FABRINO GARCIA,2011-05-14,GEIZA NATANI FABRINO GOMES
 24941,SAMUEL MARCELINO SILVA DE ALMEIDA,2008-01-12,SOLANGE MARCELINO SILVA
 24942,THIFFANY SILVA DOS SANTOS,2011-08-24,KARYN SILVA DE ALMEIDA
 24943,YASMIN LUCAS SILVA,2011-12-15,ROSILENE SILVA LUCAS
@@ -13467,3 +13467,5 @@ Cód.,Aluno,Nascimento,Mae
 29009,ISAQUE SAMPAIO DE OLIVEIRA LOPES,2008-06-01,STEFFANIE SAMPAIO DE OLIVEIRA                                         
 29010,MIGUEL EZIL CUNHA DA CONCEIÇÃO,2013-01-10,LUCIMARA CUNHA                                                        
 29011,ANNA CRISTINA RODRIGUES MOTTA,2013-03-15,CLAUDIANE RODRIGUES DE SOUZA                                          
+29012,GEOVANNA SOARES DIAS SOUZA DE SILVA,2009-09-15,JAKELINE SOARES DIAS                                                  
+29013,MAYTE CABRAL ROSA,2011-12-09,TATHIANA SEBASTIAO CABRAL ROSA                                        
