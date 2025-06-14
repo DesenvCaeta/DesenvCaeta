@@ -25,7 +25,7 @@ df_alunos, df_familias, df_dadosbasicos, df_resultados, df_beneficios, df_contas
 st.sidebar.title("Pesquisar Aluno")
 st.sidebar.write("")
 # *************************************************************
-st.sidebar.text("Última atualização: 20/05/2025")
+st.sidebar.text("Última atualização: 14/06/2025")
 # *************************************************************
 st.sidebar.text("")
 #st.sidebar.text("Digite o nome desejado e quando\nencontrado clique no mesmo")
@@ -155,9 +155,9 @@ with tab5:
             st.write(f"**Código da Conta:** {cod_conta}")
             
             if pd.isna(dat_open):
-                st.write("Data de abertura: Não informada")
+                st.write("Data da Carga: Não informada")
             else:
-                st.write(f"**Data de Abertura:** {dat_open}")
+                st.write(f"**Data da Carga:** {dat_open}")
                        
             st.write(f"**CPF:** {num_cpf}")#{num_cpf[:2]}.{num_cpf[3:5]}.{num_cpf[6:8]}-{num_cpf[9:]}")
             st.write(f"**Banco:** {banco}")
