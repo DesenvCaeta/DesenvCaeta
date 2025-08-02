@@ -24,7 +24,7 @@ df_alunos, df_familias, df_dadosbasicos, df_resultados, df_beneficios = load_dat
 st.sidebar.title("Pesquisar Progresso Inconsistente")
 st.sidebar.write("")
 # *************************************************************
-st.sidebar.text("Última atualização: 26/07/2025")
+st.sidebar.text("Última atualização: 02/08/2025")
 # *************************************************************
 st.sidebar.text("")
 #st.sidebar.text("Digite o nome desejado e quando\nencontrado clique no mesmo")
