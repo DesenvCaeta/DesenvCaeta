@@ -16,16 +16,18 @@ def load_data():
     df_resultados = pd.read_csv('DF_RESULTADOS.csv')
     df_beneficios = pd.read_csv('DF_BENEFICIOS.csv')
     df_contas =  pd.read_csv('DF_CONTAS.csv')
+    df_financ =  pd.read_csv('DF_FINANC.csv')    
+    df_pas =  pd.read_csv('DF_PAS.csv')       
     
-    return df_alunos, df_familias, df_dadosbasicos, df_resultados, df_beneficios, df_contas
+    return df_alunos, df_familias, df_dadosbasicos, df_resultados, df_beneficios,df_contas, df_financ, df_pas
 
-df_alunos, df_familias, df_dadosbasicos, df_resultados, df_beneficios, df_contas = load_data()
+df_alunos, df_familias, df_dadosbasicos, df_resultados, df_beneficios,df_contas, df_financ, df_pas = load_data()
 
 # Sidebar
 st.sidebar.title("Pesquisar Aluno")
 st.sidebar.write("")
 # *************************************************************
-st.sidebar.text("Última atualização: 02/08/2025")
+st.sidebar.text("Última atualização: 07/08/2025")
 # *************************************************************
 st.sidebar.text("")
 #st.sidebar.text("Digite o nome desejado e quando\nencontrado clique no mesmo")
@@ -40,11 +42,15 @@ if aluno_filtro:
     df_familias = df_familias[df_familias["Aluno"].str.contains(aluno_filtro, case=False)]
 
 #Abas
-tab1,tab2,tab3,tab4,tab5 = st.tabs(["Pesquisa","Dados Pessoais","Resultados","Benefícios","Conta Poupança" ])
+tab1,tab2,tab3,tab4,tab5,tab6,tab7 = st.tabs(["Pesquisa","Dados Pessoais","Resultados","Benefícios","Conta Poupança","Ficha Financeira","Inserção PA" ])
 
 with tab1:
     # Aba "Pesquisa"
     # Apresentar dataframe na aba Pesquisa
+    
+    # Formatando a data
+    df_familias["Nascimento"] = pd.to_datetime(df_familias["Nascimento"], errors="coerce").dt.strftime("%d/%m/%Y")
+    
     st.dataframe(df_familias[["Cód.", "Aluno", "Nascimento", "Mae"]].reset_index(drop=True),
                 height=200, use_container_width=True, hide_index=True,
                 column_config={"Cód.": st.column_config.NumberColumn(format="%.0f")})
@@ -145,6 +151,7 @@ with tab5:
 
         if not conta_info.empty:
             cod_conta = conta_info["cod_conta"].values[0]
+
             dat_open = conta_info["dat_open"].values[0]#.strftime("%d/%m/%Y")
             num_cpf = conta_info["num_cpf"].values[0]
             banco = conta_info["Banco"].values[0]
@@ -167,3 +174,89 @@ with tab5:
             st.write("Nenhuma conta encontrada para o aluno.")
     else:
         st.write("Aluno não possui conta-poupança registrada.")
+
+# Aba "Ficha Financeira"
+
+with tab6:
+    if idt_elegivel in df_dadosbasicos["Cód."].to_list():
+        st.header(f"{idt_elegivel} - {dados_pessoais['Aluno']}")
+
+        # Filtrar e selecionar colunas
+        df_financ = df_financ[df_financ["Cod"] == idt_elegivel][["Ano Letivo", "Serie", 
+                                                                 "Banco", "Agencia", "Conta", 
+                                                                 "Valor(R$)", "Deposito", "Numero PA"]]
+
+        # Ordenar por data
+        df_financ.sort_values(by="Deposito", inplace=True)
+
+        # Formatando a data
+        df_financ["Deposito"] = pd.to_datetime(df_financ["Deposito"], errors="coerce").dt.strftime("%d/%m/%Y")
+
+        # Ajustar largura visual com espaços
+        df_financ["Ano Letivo"] = df_financ["Ano Letivo"].astype(str).str.strip()
+        df_financ["Serie"] = df_financ["Serie"].astype(str).str.strip()
+        df_financ["Banco"] = df_financ["Banco"].astype(str).str.strip()
+        df_financ["Agencia"] = df_financ["Agencia"].astype(str).str.strip()
+        df_financ["Valor(R$)"] = df_financ["Valor(R$)"].map(lambda x: f"{x:.2f}".strip())
+
+        df_financ["Conta"] = df_financ["Conta"].astype(str).apply(lambda x: f"{x}      ")
+        df_financ["Numero PA"] = df_financ["Numero PA"].astype(str).apply(lambda x: f"{x}   ")
+
+        # Exibir tabela
+        st.dataframe(df_financ, use_container_width=True, hide_index=True,
+                     column_config={
+                         "Ano Letivo": st.column_config.TextColumn(),
+                         "Serie": st.column_config.TextColumn(),
+                         "Banco": st.column_config.TextColumn(),
+                         "Agencia": st.column_config.TextColumn(),
+                         "Valor(R$)": st.column_config.TextColumn(),
+                         "Conta": st.column_config.TextColumn(),
+                         "Numero PA": st.column_config.TextColumn()
+                     })
+
+        # Calcular total depositado
+        total_depositado = df_financ["Valor(R$)"].astype(float).sum()
+        st.subheader(f"Total depositado até o momento: R$ {total_depositado:,.2f}")
+    else:
+        st.header("Aluno não encontrado")
+
+# Aba "Inserção PA"
+with tab7:                              
+      
+     if idt_elegivel in df_dadosbasicos["Cód."].to_list():
+        st.header(f"{idt_elegivel} - {dados_pessoais['Aluno']}")
+
+        # Filtrar e selecionar colunas
+        df_pas = df_pas[df_pas["Cod"] == idt_elegivel][["Ano Letivo", "Serie", 
+                                                   "Banco", "Agencia","Conta", "Valor(R$)", 
+                                                   "Envio", "Numero PA"]]
+
+        # Formatando a data
+        df_pas["Envio"] = pd.to_datetime(df_pas["Envio"], errors="coerce").dt.strftime("%d/%m/%Y")
+
+        # Ajustar largura visual com espaços
+        df_pas["Ano Letivo"] = df_pas["Ano Letivo"].astype(str).str.strip()
+        df_pas["Serie"] = df_pas["Serie"].astype(str).str.strip()
+        df_pas["Banco"] = df_pas["Banco"].astype(str).str.strip()
+        df_pas["Agencia"] = df_pas["Agencia"].astype(str).str.strip()
+        df_pas["Valor(R$)"] = df_pas["Valor(R$)"].map(lambda x: f"{x:.2f}".strip())
+
+        df_pas["Conta"] = df_pas["Conta"].astype(str).apply(lambda x: f"{x}      ")
+        df_pas["Numero PA"] = df_pas["Numero PA"].astype(str).apply(lambda x: f"{x}   ")
+
+        # Ordenar por data
+        df_pas.sort_values(by="Envio", inplace=True)
+
+        # Exibir tabela
+        st.dataframe(df_pas, use_container_width=True, hide_index=True,
+                     column_config={
+                         "Ano Letivo": st.column_config.TextColumn(),
+                         "Serie": st.column_config.TextColumn(),
+                         "Banco": st.column_config.TextColumn(),
+                         "Agencia": st.column_config.TextColumn(),
+                         "Valor(R$)": st.column_config.TextColumn(),
+                         "Conta": st.column_config.TextColumn(),
+                         "Numero PA": st.column_config.TextColumn()
+                     })
+     else:
+        st.header("Aluno não encontrado")
